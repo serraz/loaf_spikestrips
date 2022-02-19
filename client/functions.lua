@@ -12,7 +12,34 @@ function DeployStinger()
     FreezeEntityPosition(stinger, true)
     PlaceObjectOnGroundProperly(stinger)
     SetEntityVisible(stinger, false)
-
+            
+       exports['qtarget']:AddEntityZone('stinger', stinger, {
+            name="stinger",
+            heading = GetEntityHeading(stinger),
+            debugPoly=false,
+        },{
+            options = {
+            {
+               -- event = "RemoveStinger()",
+                icon = "fa-xmark",
+                label = "Remove Road Spikes",
+                job = 'police',
+                action = function(entity)
+                   RemoveStinger()
+                end
+            },
+            {
+               -- event = "RemoveStinger()",
+                icon = "fa-xmark",
+                label = "Remove Road Spikes",
+                job = 'sheriff',
+                action = function(entity)
+                   RemoveStinger()
+                end
+            },
+        },
+        distance = 2.5
+    })
     -- init scene
     local scene = NetworkCreateSynchronisedScene(GetEntityCoords(PlayerPedId()), GetEntityRotation(PlayerPedId(), 2), 2, false, false, 1065353216, 0, 1.0)
     NetworkAddPedToSynchronisedScene(PlayerPedId(), scene, LoadDict("amb@medic@standing@kneel@enter"), "enter", 8.0, -8.0, 3341, 16, 1148846080, 0)
